@@ -1,0 +1,124 @@
+---
+  title: "Untitled"
+output:
+  html_document:
+  df_print: paged
+---
+  
+  ```{r}
+#Step1: Exploring and Preparing the data---
+insurance <- read.csv(file.choose('C:/Users/choti/Documents/National University/ANA625  Categorical Data Methods/Homework/Datasets/insurance.csv'), header = T)
+View(insurance)
+str(insurance)
+
+#Summary
+summary(insurance)
+summary(insurance$charges)
+summary(insurance$age)
+summary(insurance$children)
+summary(insurance$bmi)
+
+#correlation matrix
+cor(insurance[c("age", "bmi", "children", "charges")])
+
+#scatter plot matrix
+pairs(insurance[c("age", "bmi", "children", "charges")])
+pairs(insurance[c("age", "sex", "bmi", "children", "smoker", "region", "charges")])
+
+#scatterplots, distributions and correlations
+library(psych)
+Scatter <- (insurance[c("age", "sex", "bmi", "children", "smoker", "region", "charges")])
+pairs.panels(Scatter, main = "Scatter Plot Matrix of All Variables")
+
+#Scatter plot and add regression lines
+plot(insurance$age,insurance$charges, main = "scatterplot of Age and Insurance Charges", ylab ="Charges", xlab ="Age")
+plot(insurance$bmi,insurance$charges, main = "scatterplot of Body Mass Index and Insurance Charges", ylab ="Insurance Charges", xlab ="Body Mass Index")
+plot(insurance$children, insurance$charges, main = "scatterplot of No. of Children and Insurance Charges", ylab ="Insurance Charges", xlab ="No. of Children")
+
+# boxplot
+boxplot(charges~sex, data=insurance, col = "Sky Blue", main = "Charges Vs. Sex boxplot", xlab = "Sex", ylab = "Insurance Charges")
+boxplot(charges~smoker, data=insurance, col = "Pink", main = "Charges Vs. Smoker boxplot", xlab = "Smoker", ylab = "Insurance Charges")
+boxplot(charges~region, data=insurance, col = "Dark Grey", main = "Insurance Charges Vs. Region boxplot", xlab = "Region", ylab = "Insurance Charges")
+age_cat <- cut(insurance$age, 5)
+boxplot(charges~age_cat, data=insurance, col = "Violet", main = "Charges Vs. Age boxplot", xlab = "Age", ylab = "Insurance Charges")
+children_cat <- cut(insurance$children, 5)
+boxplot(charges~children, data=insurance, col = "Yellow", main = "Charges Vs. No. of children boxplot", xlab = "No. of Children", ylab = "Insurance Charges")
+bmi_cat <- cut(insurance$bmi, 5)
+boxplot(charges~bmi_cat, data=insurance, col = "chartreuse", main = "Insurance Charges Vs. Body Mass Index boxplot", xlab = "Body Mass Index", ylab = "Insurance Charges")
+
+#Histogram of insurance 
+hist(insurance$charges, breaks = 30, main = "Histogram of Charges", col = "Blue", xlab = "Charges")
+hist(insurance$bmi, breaks = 10, col = "Pink", main = "Histogram of Body Mass Index", xlab = "Body Mass Index")
+hist(insurance$children, breaks = 8, col = "Green", main = "Histogram of No. of Children", xlab = "No. of Children")
+hist(insurance$age, breaks = 20, main = "Histogram of Age", col = "Red",  xlab = "Age")
+
+#table of categorical variables
+table(insurance$sex)
+table(insurance$smoker)
+table(insurance$region)
+
+#mean
+mean(insurance$age)
+mean(insurance$bmi)
+mean(insurance$children)
+mean(insurance$charges)
+
+#median
+median(insurance$age)
+median(insurance$bmi)
+median(insurance$children)
+median(insurance$charges)
+
+#Mode
+temp <- table(as.vector(insurance$age))
+names(temp[temp== max(temp)])
+temp <- table(as.vector(insurance$bmi))
+names(temp[temp== max(temp)])
+temp <- table(as.vector(insurance$children))
+names(temp[temp== max(temp)])
+temp <- table(as.vector(insurance$charges))
+names(temp[temp== max(temp)])
+
+#install e1071
+library(e1071)
+#finding skewness
+skewness(insurance$age)
+skewness(insurance$bmi)
+skewness(insurance$children)
+skewness(insurance$charges)
+
+#finding kurtosis
+kurtosis(insurance$age)
+kurtosis(insurance$bmi)
+kurtosis(insurance$children)
+kurtosis(insurance$charges)
+
+# Filled Density Plot
+plot(density(insurance$age), main="Distribution of Insurance$Age", col = "Violet", xlab = "Age", ylab = "Density")
+plot(density(insurance$bmi), main="Distribution of Insurance$Bmi", col = "Dark Green",  xlab = "Body Mass Index", ylab = "Density")
+plot(density(insurance$children), main="Distribution of Insurance$Children", col = "Black",  xlab = "No. of Children", ylab = "Density")
+plot(density(insurance$charges), main="Distribution of Insurance$Charges", col = "Dark Blue",  xlab = "Insurance Charges", ylab = "Density")
+
+#Standard deviation
+sd(insurance$age)
+sd(insurance$bmi)
+sd(insurance$children)
+sd(insurance$charges)
+
+#Interquartile Range
+IQR(insurance$age)
+IQR(insurance$bmi)
+IQR(insurance$children)
+IQR(insurance$charges)
+
+#quantile-quantile plots
+qqnorm(insurance$age, main = "Normal Q-Q plot of Age", ylab = "Sample Quantiles (Age)", xlab = "Theoratical Quantiles (Age)")
+qqline(insurance$age, col = "steelblue", lwd = 3)
+qqnorm(insurance$bmi, main = "Normal Q-Q plot of Body Mass Index", ylab = "Sample Quantiles (Body Mass Index)", xlab = "Theoratical Quantiles (Body Mass Index)")
+qqline(insurance$bmi, col = "violet", lwd = 3)
+qqnorm(insurance$charges, main = "Normal Q-Q plot of Insurance Charges", ylab = "Sample Quantiles (Insurance Charges)", xlab = "Theoratical Quantiles (Insurance Charges)")
+qqline(insurance$charges, col = "Dark Green", lwd = 3)
+qqnorm(insurance$children, main = "Normal Q-Q plot of No. of Children", ylab = "Sample Quantiles (No. of Children)", xlab = "Theoratical Quantiles (No. of Children)")
+qqline(insurance$children, col = "Dark Blue", lwd = 3)
+```
+
